@@ -1,0 +1,118 @@
+#
+#   $Id: README 64 2006-04-25 14:21:28Z finley $
+#    vi:set filetype=conf:
+#
+
+WiFi Radar
+--------------------------------------------------------------------------------
+
+    Maintained by Brian Elliott Finley <brian@thefinleys.com>
+    Created by Ahmad Baitalmal <ahmad@baitalmal.com>
+
+    http://wifi-radar.systemimager.org/
+
+    WiFi Radar is released under the GPL license.
+
+
+Quick Usage
+--------------------------------------------------------------------------------
+    To do a quick scan and connect to any available profile:
+	
+        sudo wifi-radar -d
+
+
+	To show the GUI and manage profiles:
+
+	    sudo wifi-radar
+
+
+    To have wifi-radar automatically connect to one of your pre-defined
+    networks each time your machine wakes from sleep:
+
+        On Ubuntu or Debian, edit "/etc/default/acpi-support" and add
+        wifi-radar to the STOP_SERVICES line.
+
+
+I. Here are Some Important Bits:
+--------------------------------------------------------------------------------
+
+    * The config file defaults to /etc/wifi-radar/wifi-radar.conf.  This
+      can be changed at install time with something like:
+
+        "make install sysconfdir=/etc/wifi-radar"
+
+
+    * If the conf file does not exist, it will create it, so you must
+      always run it within a correctly permitted account (as root or use
+      sudo).
+
+    * Running it with the "--daemon" or "-d" option will set it to "scan
+      and auto connect" mode, which has no UI (good for running at boot
+      time or in the background).
+
+	You can change everything else from the conf file which is simply a
+    .ini file.  To change the location of the .conf file change it in
+    wifi-radar.  
+    
+    If you have questions, post them to the Linux Forum at the X1000
+    Forums site (http://www.x1000forums.com/index.php?showforum=8).
+    
+
+II. Dependencies
+--------------------------------------------------------------------------------
+
+    * Python
+    * pygtk2
+
+
+III. Install
+--------------------------------------------------------------------------------
+
+    1. Type "sudo make install"
+       (or "sudo make install sysconfdir=/etc/wifi-radar")
+
+
+IV. HOWTO: Optional PAM Configuration
+--------------------------------------------------------------------------------
+    
+    These instructions allow you to run wifi-radar as a normal user
+    without using sudo.  Thanks to Flipp Bunts <flipp.bunts@gmail.com>
+    for this HOWTO.
+
+	HOWTO get wifi-radar custom launcher to use PAM authentication in
+    Gnome:
+        1. get wifi-radar and untar
+        2. put wifi-radar.svg in /usr/share/pixmaps
+        3. put wifi-radar.py in /usr/local/bin
+        4. ln -s /usr/bin/consolehelper /usr/local/bin/wifi-radar
+        5. vi /etc/security/console.apps/wifi-radar
+                USER=root
+                PROGRAM=/usr/local/bin/wifi-radar.py
+                SESSION=true
+        6. vi /etc/pam.d/wifi-radar
+                #%PAM-1.0
+                auth       sufficient   pam_rootok.so
+                auth       sufficient   pam_timestamp.so
+                auth       required     pam_stack.so service=system-auth
+                session    required     pam_permit.so
+                session    optional     pam_xauth.so
+                session    optional     pam_timestamp.so
+                account    required     pam_permit.so
+        7. check the permissions
+                # ls -lh /etc/security/console.apps/wifi-radar /etc/pam.d/wifi-radar
+                -rw-r--r--  1 root root  /etc/pam.d/wifi-radar
+                -rw-r--r--  1 root root  /etc/security/console.apps/wifi-radar
+        8. add launcher
+                a. right click on panel
+                b. select 'add to panel'
+                c. click on 'custom application launcher'
+                d. options for 'create launcher'
+                name : wifi-radar
+                command : /usr/local/bin/wifi-radar
+                icon : /usr/share/pixmap/wifi-radar.svg
+        9. click on the icon, enter the root password, away you go
+
+
+Have fun!
+
+

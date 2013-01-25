@@ -1,0 +1,347 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+
+
+	<title>Python Unicode Tutorial</title>
+</head><body bgcolor="#ffffff">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+	
+    <td bgcolor="#0000cc" valign="top" width="150">
+      <table bgcolor="#0000cc" border="0" cellpadding="0" cellspacing="0" width="120"><tbody>
+        <tr>
+		  <!--this spans down the left and provides a 'spacer' for all the text elements-->
+		  <td rowspan="100" bgcolor="#0000cc" valign="top">&nbsp; &nbsp; </td>
+		  <td>&nbsp; </td>
+		</tr>
+		<!--now for real content rows-->
+		<tr>
+          <td bgcolor="#0000cc"><img src="python_unicode_tutorial_files/leftlogo.gif" height="68" width="103"></td>
+		</tr>
+        <tr>
+          <td bgcolor="#0000cc"><img src="python_unicode_tutorial_files/binarypaper.gif" height="178" width="103"></td>
+		</tr>
+        
+	    <tr>
+		  <td><a href="http://www.reportlab.com/about.html">
+		  	<b><font color="#ffffff">Home</font></b>
+		  </a></td>
+		</tr>
+        <tr>
+		  <td>&nbsp; </td>
+		</tr>
+        <tr>
+		  <td><a href="http://www.reportlab.com/addvalue.html">
+		  	<b><font color="#ffffff">Adding Value</font></b>
+		  </a></td>
+		</tr>
+        <tr>
+		  <td><a href="http://www.reportlab.com/demos/demos.html">
+		  	<b><font color="#ffffff">Demos!</font></b>
+		  </a></td>
+		</tr>
+        <tr>
+		  <td><a href="http://www.reportlab.com/whitepaper.html">
+		  	<b><font color="#ffffff">White Paper</font></b>
+		  </a></td>
+		</tr>
+
+        <tr>
+		  <td><a href="http://www.reportlab.com/devfaq.html">
+		  	<b><font color="#ffffff">FAQ</font></b>
+		  </a></td>
+		</tr>
+
+        <tr>
+		  <td>&nbsp; </td>
+		</tr>
+
+        <tr>
+		  <td>&nbsp; </td>
+		</tr>
+        <tr>
+		  <td><a href="http://www.reportlab.com/contacts.html">
+		  	<b><font color="#ffffff">Contact</font></b>
+		  </a></td>
+		</tr>
+        <tr>
+		  <td>&nbsp; </td>
+		</tr>
+        <tr>
+		  <td><a href="http://www.adobe.com/products/acrobat/readstep.html">
+		  <img src="python_unicode_tutorial_files/getacro.gif" alt="" border="0"></a> </td>
+		</tr>
+		</tbody></table>
+		
+	</td>
+	<!-- outer table first cell finished-->
+    <td width="15">&nbsp; &nbsp; &nbsp; </td>
+	<td valign="top" width="90%">
+	<!--User Content Starts Here-->
+<h1>Python Unicode Tutorial</h1>
+This is brief tutorial aimed at explaining the Unicode additions to Python.
+Please help me keep it up to date and accurate!
+
+<h2>Why is Python getting Unicode support?</h2>
+Once you get beyond the ASCII world, there are many different 
+native encodings for different languages and operating systems.
+Converting between all of these is easiest with a central
+"common point", and that is Unicode.  Unicode is a two-byte
+encoding which covers all of the world's common writing
+systems. It is important for many reasons:
+<dl>
+	<dt>Data Storage</dt><dd>If your customer database is all English,
+	or even all Japanese, you can store it any way you like.
+	But if you have to keep English, Japanese, Russian and Thai
+	in the same file or database column, you can;t use a native encoding -
+	you really need something like Unicode.
+	</dd><dt>Encoding Conversion</dt><dd>If a new encoding needs to
+	be added to a library, it is only necessary to establish
+	a mapping to and from Unicode, and not to every other
+	encoding in the world
+	</dd><dt>Operations on wide characters</dt><dd>Asian languages have to
+	use more tha one byte per character.  Most native encodings
+	use a mix of single bytes for ASCII, and two bytes per chinese
+	character. Software that needs to slice strings can potentially
+	cut a character in half. It is much, much easier to write string-
+	processing operations in Unicode, where every character is the 
+	same width.
+	</dd><dt>Operating System Compatibility</dt><dd>For the above reasons,
+	operating systems and low-level APIs have been moving to support
+	Unicode, and there are more and more functions around which
+	expect Unicode strings as arguments, or which return them.
+</dd></dl>
+
+
+<h2>Installation and Setup</h2>
+A Unicode-aware Python It is currently available in the public CVS repository; if you don't use 
+CVS, you can get a nightly tar.gz or zip file.
+<p>If you are used to using a compiled binary distribution of Python, 
+such as the one on Windows, you need to make some potentially
+destructive changes to your existing environment.  Here are some
+guidelines: (TODO)
+</p><p>TODO - extract the diffs for the library - exceptions
+</p><p>overwrite  python.exe and pythonw.exe in C:\program files\python with 
+the ones in the zip file
+</p><p>if using Pythonwin, it won't start, as there is an illegal use of list.append()
+in the scintilla code, which Guido is going to ban for 1.6.  Look in ..\python\pythonwin\pywin\scintilla\view.py lines
+71 and 73, and add the extra brackets so they look like this:
+</p><pre>                event_commands.append((event, val))
+        for name, id in _extra_event_commands:
+                event_commands.append((name, id))
+</pre>
+After this change, Pythonwin should work again.
+
+<h2>Viewing data in different encodings</h2>
+To actually look at data in different encodings, the best tool is a web browser.  
+You may not know it, but IE and Netscape can both display many common encodings
+(including Asian and Middle Eastern scripts, if you download the right fonts).
+The View | Encodings menu in IE5 controls how the current page is interpreted:
+<p></p><div align="center"><img src="python_unicode_tutorial_files/ie5_encodings_menu.gif" alt="IE5 Encodings Menu" border="0" height="381" width="405"></div>
+<p>Let's imagine we have an HTML file containing the name of the author of the
+unicode extensions, encoded in ISO-latin-1.  This contains an acute letter e, 
+which is not available in ASCII.  If you have this encoding selected in the browser,
+and have any Asian fonts installed, you should see this:
+</p><p></p><div align="center"><img src="python_unicode_tutorial_files/andre_latin_1.gif"></div>
+<p>If you now go and select (say) UTF8, the bytes will be interpreted differently and
+you will see this instead:
+</p><p></p><div align="center"><img src="python_unicode_tutorial_files/andre_utf8.gif"></div>
+<p>That's because the three bytes from the acute-e to the 'L' in Lemburg are UTF8 
+for a Chinese character. (If you don't have the fonts installed, you'll see a round
+blob, which is the generic 'I don't know how to display this' symbol in IE5.)
+
+</p><p>Seen from a long distance away, the Unicode extensions are largely about how to prevent
+this kind of thing:  letting you explicitly control the encodings of the files 
+you work with, and converting between them as needed.  Unicode itself is an internal 
+technology to make this easier.
+
+
+
+</p><h2>Basics about Unicode strings</h2>
+<h3>Creating Unicode Strings</h3>
+We'll run through a few snippets.  The first is to look at the ways of 
+creating Unicode strings.  You can convert ASCII text to Unicode with 
+a literal notation, prefixing a 'u' before the string.  Unicode strings
+are printed to the console with a preceding 'u'.
+<pre>&gt;&gt;&gt; u"Hello World!"  #create a Unicode string
+u'Hello World!'
+</pre>
+To construct the string, Python assumed that the literal input was in UTF8,
+the "default encoding".  UTF8 is a way of encoding Unicode such that the
+basic ASCII characters remain themselves; most other single-byte writing systems
+end up as two bytes; and Chinese characters end up as three bytes.
+<p>Python 1.6 also gets a "unicode" built-in function, to which you can specify 
+the encoding:
+</p><pre>&gt;&gt;&gt; unicode('hello')
+u'hello'
+&gt;&gt;&gt; unicode('hello', 'ascii')
+u'hello'
+&gt;&gt;&gt; unicode('hello', 'iso-8859-1')
+u'hello'
+&gt;&gt;&gt;
+</pre>
+All three of these return the same thing, since the characters in 'Hello' are common 
+to all three encodings.
+<p>Now let's encode something with a European accent, which is outside of ASCII.
+What you see at a console may depend on your operating system locale; Windows lets
+me type in ISO-Latin-1.  
+
+</p><pre>&gt;&gt;&gt; a = unicode('André','latin-1')
+&gt;&gt;&gt; a
+u'Andr\202'
+</pre>
+If you can't type an acute letter e, you can enter the string 'Andr\202', which
+is unambiguous.
+<p>Unicode supports all the common operations such as iteration and splitting. We 
+won't run over them here.
+</p><h2>Encoding conversions</h2>
+We have seen how to construct a Unicode string.  Now we can convert it to some 
+other encoding using the encode() method as follows:
+<pre>&gt;&gt;&gt; a.encode('latin-1')
+'Andr\202'
+&gt;&gt;&gt; print a.encode('latin-1')
+André
+&gt;&gt;&gt; a.encode('utf8')
+'Andr\302\202'
+&gt;&gt;&gt;
+</pre>
+As we told you, the acute-e ends up as two bytes in the UTF8 encoding.
+<p>Not all conversions are possible because not every encoding includes
+every Unicode character.  If we try to convert to ASCII, we should expect 
+an error:
+</p><pre>&gt;&gt;&gt; a.encode('ascii')
+Traceback (innermost last):
+  File "<stdin>", line 1, in ?
+UnicodeError: ASCII encoding error: ordinal not in range(128)
+</stdin></pre>
+There are three default error-handling modes which you can specify,
+with the default being 'strict'; that way you will always be warned
+about potential data loss.
+<pre>&gt;&gt;&gt; a.encode('ascii', 'strict')  # the default, raise exception
+Traceback (innermost last):
+  File "<stdin>", line 1, in ?
+UnicodeError: ASCII encoding error: ordinal not in range(128)
+&gt;&gt;&gt; a.encode('ascii', 'ignore')  # turn to zero and continue 
+'Andr\000'
+&gt;&gt;&gt; a.encode('ascii', 'replace') # replace with a readable error character
+'Andr?'
+&gt;&gt;&gt;
+</stdin></pre>
+Note that for the Asian encodings, we will try to provide user-settable
+error behaviour going beyond this.
+<h2>Looking at the raw data</h2>
+Sometimes you want to see how stuff is being stored internally. 
+We deal with this using an 'encoding' called 'utf-16', which is
+actually pretty close to how the Unicode is stored internally.  In fact, 
+there are two flavours, 'utf-16-le' for little-endian machines and
+'utf-16-be' for big-endian machines.
+<pre>&gt;&gt;&gt; a.encode('utf-16')
+'\377\376A\000n\000d\000r\000\202\000'
+&gt;&gt;&gt;
+</pre>
+The UTF16 standard specifies that 'naked' files or strings should be
+preceded with a byte-order-mark to indicate the endianness of the
+machine producing it, so UTF16 strings begin with 0xFFFE, or octal 
+\377\376 as we see above.  Apart from that you can see ten bytes
+
+<pre>
+&gt;&gt;&gt; for char in a:
+...     print ord(char)
+...
+65
+110
+100
+114
+130
+&gt;&gt;&gt;</pre>
+<h2></h2>
+
+
+<h2>Marc-Andre's original snippets</h2>
+<pre>&gt;&gt;&gt; u"Hello World!"
+u'Hello World!'
+
+&gt;&gt;&gt; # Strings and Unicode do auto-coercion, e.g.
+&gt;&gt;&gt; u"Hello World!".split(u' ')
+[u'Hello', u'World!']
+&gt;&gt;&gt; # This also works with normal strings:
+&gt;&gt;&gt; u"Hello World!".split(' ')
+[u'Hello', u'World!']
+
+&gt;&gt;&gt; # Strings and Unicode can interoperate:
+&gt;&gt;&gt; 'Hello' + u' ' + 'World' + u'!'
+u'Hello World!'
+
+&gt;&gt;&gt; # The string module handles both worlds using a single API
+&gt;&gt;&gt; import string
+&gt;&gt;&gt; string.split(u'Hello World!')
+[u'Hello', u'World!']
+&gt;&gt;&gt; string.split('Hello World!')
+['Hello', 'World!']
+
+&gt;&gt;&gt; # Using Codecs is easy:
+&gt;&gt;&gt; unicode('Hello World!','latin-1')
+u'Hello World!'
+&gt;&gt;&gt; # ... in both directions:
+&gt;&gt;&gt; unicode('Hello World!','latin-1').encode('ascii')
+'Hello World!'
+&gt;&gt;&gt; # The Unicode-Escape encoding simplifies entering Unicode
+&gt;&gt;&gt; # directly:
+&gt;&gt;&gt; u'Hello\u1234World!'
+u'Hello\u1234World!'
+
+&gt;&gt;&gt; # Codecs raise a UnicodeError in case conversion is not
+&gt;&gt;&gt; # possible (note the center dot between the words):
+&gt;&gt;&gt; unicode('Hello·World!','latin-1').encode('ascii')
+Traceback (innermost last):
+  File "<stdin>", line 1, in ?
+UnicodeError: ASCII encoding error: ordinal not in range(128)
+&gt;&gt;&gt; unicode('Hello·World!','latin-1').encode('utf-8')
+'Hello\302\267World!'
+
+Here is an example of stackable streams:
+import codecs,sys
+
+# Convert Unicode -&gt; UTF-8
+(e,d,sr,sw) = codecs.lookup('utf-8')
+unicode_to_utf8 = sw(sys.stdout)
+
+# Convert Latin-1 -&gt; Unicode during .write
+(e,d,sr,sw) = codecs.lookup('latin-1')
+class StreamRewriter(codecs.StreamWriter):
+
+    encode = e
+    decode = d
+
+    def write(self,object):
+
+        """ Writes the object's contents encoded to self.stream
+            and returns the number of bytes written.
+        """
+        data,consumed = self.decode(object,self.errors)
+        self.stream.write(data)
+        return len(data)
+    
+latin1_to_utf8 = StreamRewriter(unicode_to_utf8)
+
+# Now install
+sys.stdout = latin1_to_utf8
+
+# All subsequent prints will output Latin-1 strings using UTF-8
+# characters...
+
+&gt;&gt;&gt; print 'Hello World!'
+Hello World!
+&gt;&gt;&gt; print 'Hello·World!'
+HelloÂ·World!
+</stdin></pre>
+
+<!--User Content Ends Here-->
+
+	</td></tr>
+</tbody></table>
+
+
+</body></html>

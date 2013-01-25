@@ -1,0 +1,150 @@
+wifi-radar (1.9.7-0ubuntu4) feisty; urgency=low
+
+  * patches/06manpages:
+    - fixed formating errors (Closes LP#97413)
+    - place wifi-radar.conf.5 in man5, not man8 (Closes LP#97380)
+    - move previous 'man' fixes from 02wpa_supplicant to this patch
+  * patches/07gui:
+    - do a better formating of SSID/IP (Closes LP#97447)
+  * build wifi-radar before installing it (Closes LP#97328)
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Fri,  6 Apr 2007 11:22:48 +0200
+
+wifi-radar (1.9.7-0ubuntu3) feisty; urgency=low
+
+  * debian/wifi-radar.xpm:
+    - added xpm image (Closes LP#81295)
+  * debian/postinst:
+    - check if config file is empty or non-existing (Closes LP#88330)
+  * debian/63-wifi-radar.sh
+    - start wifi-radar after ACPI resume (Closes LP#56960)
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Mon, 19 Mar 2007 20:52:24 +0100
+
+wifi-radar (1.9.7-0ubuntu2) edgy; urgency=low
+
+  * Changed homepage of the project in man pages and package description
+  * Fixed typo in wifi-radar.conf.5
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Tue, 17 Oct 2006 08:22:13 +0200
+
+wifi-radar (1.9.7-0ubuntu1) edgy; urgency=low
+
+  * New upstream release
+  * patches/03fix_dhcp removed; accepted upstream
+  * Changed maintainer email address
+  * Changed copyright; new upstream source
+  * patches/05python:
+    - use gtk.gdk.threads* instead of gtk.threads*
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Thu, 28 Sep 2006 03:23:34 +0200
+
+wifi-radar (1.9.6-0ubuntu4) dapper; urgency=low
+
+  * Fixed paths in wifi-radar.1
+  * patches/04nonroot_exit:
+    - exit gracefully with human readable error (Closes LP#43857)
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Tue,  9 May 2006 21:55:50 +0200
+
+wifi-radar (1.9.6-0ubuntu3) dapper; urgency=low
+
+  * patches/02_wpa_args (revision):
+    - replace -p with -P argument to wpa_supplicant (Closes: LP#41820)
+  * patches/03fix_dhcp
+    - kill old dhclient before requesting new IP (Closes: LP#41792)
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Sat, 29 Apr 2006 15:51:02 +0200
+
+wifi-radar (1.9.6-0ubuntu2) dapper; urgency=low
+
+  * fixed paths for wpa_supplicant config and binary
+  * fixed wpa_args (Closes: LP#3964)
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Wed, 26 Apr 2006 08:24:19 +0200
+
+wifi-radar (1.9.6-0ubuntu1) dapper; urgency=low
+
+  * New upstream release
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Mon, 10 Apr 2006 22:27:19 +0200
+
+wifi-radar (1.9.4-0ubuntu8) dapper; urgency=low
+
+  * patches/01atheros-dhclient:
+    - reduce time.sleep from 30 to 3 seconds
+    - include managment for dhcpd and pump from SVN
+    - include patches from SVN (closes Ubuntu #4033)
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Fri, 24 Mar 2006 16:07:51 +0100
+
+wifi-radar (1.9.4-0ubuntu7) dapper; urgency=low
+
+  * Execute script after conversion. Ubuntu #18115.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 14 Nov 2005 08:20:08 +0000
+
+wifi-radar (1.9.4-0ubuntu6) breezy; urgency=low
+
+  * debian/postrm:
+    - added #DEBHELPER#
+  * debian/postinst:
+    - added #DEBHELPER#
+  * debian/control:
+    - bumped Standards-Version
+
+ -- Ante Karamatic <ivoks@ubuntu.com>  Sat, 24 Sep 2005 11:04:48 +0200
+
+wifi-radar (1.9.4-0ubuntu5) breezy; urgency=low
+
+  * Added wifi-radar daemon
+  * Cleaning debian/rules
+
+ -- Ante Karamatic <ivoks@grad.hr>  Wed, 24 Aug 2005 10:10:32 +0200
+
+wifi-radar (1.9.4-0ubuntu4) breezy; urgency=low
+
+  * Fixed path for wpasupplicant configuration
+  * WHISHLIST -> WISHLIST
+
+ -- Ante Karamatic <ivoks@grad.hr>  Fri, 15 Jul 2005 18:50:57 +0200
+
+wifi-radar (1.9.4-0ubuntu3) breezy; urgency=low
+
+  * Fixed issue with Atheros chips
+  * Fixed issue with German (and possible others) locales
+  * Removed test for dhclient due bugy code - needs rewrite (sorry Brian :( )
+
+ -- Ante Karamatic <ivoks@grad.hr>  Mon, 11 Jul 2005 21:17:05 +0200
+
+wifi-radar (1.9.4-0ubuntu2) breezy; urgency=low
+
+  * Added test for dhcp client (thanks Brian!)
+
+ -- Ante Karamatic <ivoks@grad.hr>  Wed,  8 Jun 2005 22:54:14 +0200
+
+wifi-radar (1.9.4-0ubuntu1) breezy; urgency=low
+
+  * New upstream version.
+  * wifi-radar now supports WPA, thus recomending wpasupplicant package
+
+ -- Ante Karamatic <ivoks@grad.hr>  Tue,  7 Jun 2005 21:24:59 +0200
+
+wifi-radar (1.9.3-0ubuntu2) breezy; urgency=low
+
+  * Added script wich finds wifi interface and configures wifi-radar for it
+  * Removed wifi-radar.conf from source. wifi-radar.conf will be created
+    during install
+
+ -- Ante Karamatic <ivoks@grad.hr>  Sat, 28 May 2005 20:38:01 +0200
+
+wifi-radar (1.9.3-0ubuntu1) breezy; urgency=low
+
+  * Initial Release.
+  * Added menu entry.
+  * Changed from dhcpd to dhclient.
+  * wifi-radar.conf moved to /etc
+  * Added man pages for wifi-radar and wifi-radar.conf
+
+ -- Ante Karamatic <ivoks@grad.hr>  Wed, 11 May 2005 22:00:26 +0200
+

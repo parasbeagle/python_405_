@@ -1,0 +1,6 @@
+01atheros.dpatch
+02wpa_supp_args.dpatch
+04nonroot_exit.dpatch
+05python.dpatch
+06manpages.dpatch
+07gui

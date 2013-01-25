@@ -1,0 +1,24 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04nonroot_exit.dpatch by Ante Karamatic <ivoks@ubuntu.com>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad wifi-radar-1.9.7~/wifi-radar wifi-radar-1.9.7/wifi-radar
+--- wifi-radar-1.9.7~/wifi-radar	2006-09-28 03:20:21.000000000 +0200
++++ wifi-radar-1.9.7/wifi-radar	2006-09-28 03:20:21.000000000 +0200
+@@ -64,6 +64,13 @@
+ # Set the SPEAK_UP to false if you do not have or want this.
+ SAY_COMMAND		= "say"
+ 
++
++if not os.access(CONF_FILE, os.R_OK):
++	print "Can't open " + CONF_FILE + "."
++	print "Are you root?"
++	sys.exit()
++
++
+ def which( command ):
+     for i in os.environ["PATH"].split(":"):
+         FILE = "%s/%s" % ( i, command )

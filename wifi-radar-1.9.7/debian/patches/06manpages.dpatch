@@ -1,0 +1,262 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 06manpages.dpatch by Ante Karamatic <ivoks@ubuntu.com>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad wifi-radar-1.9.7~/wifi-radar.1 wifi-radar-1.9.7/wifi-radar.1
+--- wifi-radar-1.9.7~/wifi-radar.1	2005-05-08 15:11:31.000000000 +0200
++++ wifi-radar-1.9.7/wifi-radar.1	2007-04-06 11:20:34.000000000 +0200
+@@ -1,5 +1,5 @@
+ .\" Author: by Ahmad Baitalmal <ahmad@baitalmal.com>
+-.TH wifi-radar 1 "April 2005" "Linux Software for managing WIFI profiles" ""
++.TH wifi-radar 1 "April 2005"
+ .SH NAME
+ wifi-radar \- utility for managing WiFi profiles
+ .SH SYNOPSIS
+@@ -9,59 +9,165 @@
+ .PP
+ Wifi-radar is a PyGTK2 utility for managing WiFi profiles.
+ .PP
++If invoked with no options, it will start a GUI
++which displays a dialog containing a list of networks.
++For each network, a number of properties is displayed.
++.TP 4
++SSID
++The SSID (network name),
++along with an icon which distinguishes preferred (known) networks
++from unknown ones.
++.IP
++Preferred networks will be listed even if they are not within range.
++.TP 4
++Signal
++Displays the current signal strength
++as an icon; the icon is light gray if the signal is very weak or absent,
++with a progressively larger dark portion for stronger signals
++(red for weak, olive for medium, dark blue for good, clear blue for very good).
++.TP 4
++Mode
++Displays a string identifying the mode of the access point;
++this is usually
++.B Master
++for a regular access point.
++.IP
++Please refer to general WiFi documentation
++for a more detailed discussion of WiFi modes.
++.TP 4
++802.11
++Displays the protocol supported by the access point;
++possible values are
++.BR a ,
++.BR b ,
++or
++.BR g .
++.IP
++Please refer to general WiFi documentation
++for details about the different protocols.
++.PP
++To the right, the following buttons are displayed.
++.TP 4
++New
++Create a new profile.
++A second dialog box opens up
++where you should fill in information
++about the profile's network.
++.TP 4
++Edit
++Edit the currently highlighted profile.
++.\" TODO: describe the edit dialog
++.TP 4
++Delete
++Delete the currently highlighted profile from the configuration.
++.TP 4
++Disconnect
++Disconnect from the currently active profile's network.
++The network you are currently connected to is displayed
++beneath the list of available networks.
++.TP 4
++Close
++Exit
++.BR wifi-radar .
++The configuration file will be updated
++if you made any changes to the preferred networks.
++.PP
++When 
++.B wifi-radar
++is run in daemon mode, no GUI is displayed.
++See the description of the
++.B --daemon
++option below for more information.
+ .PP
++See
+ .BR wifi-radar.conf (5)
+-for information on configuring the rest of its functionality.
++for more information about configuring
++.BR wifi-radar .
++.\"
++.\"
++.SS WPA Support
+ .PP
+-The wifi-radar script accepts the following command-line options:
++.B wifi-radar
++partially implements WPA-TKIP with
++.BR wpa_supplicant .
++You need a running
++.B wpa_supplicant
++installation with a
++.B wpa_supplicant.conf
++file.
++Then by setting in your
++.B wifi-radar.conf
++file the
++.B use_wpa = yes
++option and
++.B wpa_driver = ipw
++for example,
++.B wpa_supplicant
++will be launched when you connect using this profile.
++.PP
++However, currently you cannot set your
++.B wpa_supplicant
++options like
++.BR psk ", " proto ", " key_mgmt
++etc. using wifi-radar.  Your
++.B wpa_supplicant
++configuration file should be set and tested already.
++If you have different networks set up in
++.BR wpa_supplicant.conf ,
++then you can switch between them using
++.BR wifi-radar .
++.\"
++.\"
+ .SH OPTIONS
+-.TP 16
+-
+-\fB\-v\fR, \fB\-\-version\fR for printing the version.
+-.TP 16
+-
+-\fB\-d\fR, \fB\-\-daemon\fR set wifi-radar in daemon mode.
+-.TP 1
+-It will always look for the config file in /etc/conf.d/wifi-radar.conf.
+-You can change that in wifi-radar
+-.TP 5
+-* If the conf file does not exist, it will create it, so you must
+-* always run it within a correctly permitted account (as root or use
+-* sudo or pam)
+-.TP 5
+-* Running it with the "--daemon" or "-d" option will set it to "scan
+-* and auto connect" mode, which has no UI (good for running at boot
+-* time or in the background).
+-.BR
+-.TP 2
+-Recent version partially implements WPA-TKIP with wpa_supplicant. You
+-need a running wpa_supplicant installation with a
+-/etc/wpa_supplicant/wpa_supplicant.conf file.  Then by setting in your
+-/etc/wifi-radar/wifi-radar.conf file the "use_wpa = yes" option and
+-"wpa_driver = ipw" for example, wpa_supplicant will be launched when
+-you connect using this profile.
+-.TP 2
+-But currently you can't set your wpa_supplicant options like the psk,
+-proto, key_mgmt etc. using wifi-radar. Your wpa_supplicant
+-configuration file should be set and tested already. If you have
+-different networks set in wpa_supplicant.conf, then you can switch using
+-wifi-radar.
++.PP
++.B wifi-radar
++accepts the following command-line options:
++.TP 4
++\fB\-v\fR, \fB\-\-version\fR
++Print the version of
++.BR wifi-radar.
++.TP 4
++\fB\-d\fR, \fB\-\-daemon\fR
++Run
++.B wifi-radar
++in daemon mode.
++.IP
++Running
++.B wifi-radar with the
++.BR --daemon " or " -d " option"
++will set it to "scan and auto connect" mode,
++which has no UI (good for running at boot
++time or in the background).
++It will connect to the first preferred network
++which is within range,
++or give up if it cannot connect within the
++configured scan timeout time
++(default: 5 seconds,
++plus the time needed to set up interfaces etc.).
++.\"
++.\"
+ .SH FILES
+-.TP 10
+-.B /etc/wifi-radar/wifi-radar.conf
++.TP 4
++.B /etc/wifi-radar.conf
++Configuration file for
++.BR wifi-radar .
+ See
+ .BR wifi-radar.conf (5)
+ for more information.
++.\"
++.\"
+ .SH BUGS
+ .PP
+ Probably lots!
+ .PP
+ Because of a continuous scan, wifi-radar is very power consuming. 
+ .PP
+-The SVN repository is available at http://svn.bitbuilder.com
++The SVN repository is available at http://svn.systemimager.org/
+ .PP
+ If you have questions, post them to the Linux Forum at the X1000 Forums site
+ (http://www.x1000forums.com/index.php?showforum=8).
++.\"
++.\"
+ .SH AUTHOR
+ .PP
+ This script was written by Ahmad Baitaimal, with contributions from:
+@@ -79,8 +185,9 @@
+ Kevin Otte <kotte@redhat.com>
+ .IP \(bu 4
+ Richard Monk <rmonk@redhat.com>
++.\"
++.\"
+ .SH SEE ALSO
+ .PP
+-.BR wifi-radar.conf (5)
+-.PP
+-.BR wpa_supplicant
+\ No newline at end of file
++.BR wifi-radar.conf (5),
++.BR wpa_supplicant (8)
+diff -urNad wifi-radar-1.9.7~/wifi-radar.conf.5 wifi-radar-1.9.7/wifi-radar.conf.5
+--- wifi-radar-1.9.7~/wifi-radar.conf.5	2005-05-08 15:11:31.000000000 +0200
++++ wifi-radar-1.9.7/wifi-radar.conf.5	2007-04-06 11:20:46.000000000 +0200
+@@ -1,5 +1,5 @@
+ .\" Author: by Ahmad Baitalmal <ahmad@baitalmal.com>
+-.TH wifi-radar.conf 8 "April 2005" "Linux Software for managing WIFI profiles" ""
++.TH wifi-radar.conf 5 "April 2005" "Linux Software for managing WIFI profiles" ""
+ .SH NAME
+ wifi-radar.conf \- utility for managing WiFi profiles
+ .SH SYNOPSIS
+@@ -72,7 +72,7 @@
+ .PP
+ Because of a continuous scan, wifi-radar is very power consuming. 
+ .PP
+-The SVN repository is available at http://svn.bitbuilder.com
++The SVN repository is available at http://svn.systemimager.org/
+ .PP
+ If you have questions, post them to the Linux Forum at the X1000 Forums site
+ (http://www.x1000forums.com/index.php?showforum=8).
+@@ -95,6 +95,6 @@
+ Richard Monk <rmonk@redhat.com>
+ .SH SEE ALSO
+ .PP
+-.BR wifi-radar.conf (1)
++.BR wifi-radar (1)
+ .PP
+-.BR wpa_supplicant.conf (5)
+\ No newline at end of file
++.BR wpa_supplicant.conf (5)

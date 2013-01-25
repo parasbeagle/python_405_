@@ -1,0 +1,86 @@
+.\" Author: by Ahmad Baitalmal <ahmad@baitalmal.com>
+.TH wifi-radar 1 "April 2005" "Linux Software for managing WIFI profiles" ""
+.SH NAME
+wifi-radar \- utility for managing WiFi profiles
+.SH SYNOPSIS
+.B wifi-radar
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+.PP
+Wifi-radar is a PyGTK2 utility for managing WiFi profiles.
+.PP
+.PP
+.BR wifi-radar.conf (5)
+for information on configuring the rest of its functionality.
+.PP
+The wifi-radar script accepts the following command-line options:
+.SH OPTIONS
+.TP 16
+
+\fB\-v\fR, \fB\-\-version\fR for printing the version.
+.TP 16
+
+\fB\-d\fR, \fB\-\-daemon\fR set wifi-radar in daemon mode.
+.TP 1
+It will always look for the config file in /etc/conf.d/wifi-radar.conf.
+You can change that in wifi-radar
+.TP 5
+* If the conf file does not exist, it will create it, so you must
+* always run it within a correctly permitted account (as root or use
+* sudo or pam)
+.TP 5
+* Running it with the "--daemon" or "-d" option will set it to "scan
+* and auto connect" mode, which has no UI (good for running at boot
+* time or in the background).
+.BR
+.TP 2
+Recent version partially implements WPA-TKIP with wpa_supplicant. You
+need a running wpa_supplicant installation with a
+/etc/wpa_supplicant/wpa_supplicant.conf file.  Then by setting in your
+/etc/wifi-radar/wifi-radar.conf file the "use_wpa = yes" option and
+"wpa_driver = ipw" for example, wpa_supplicant will be launched when
+you connect using this profile.
+.TP 2
+But currently you can't set your wpa_supplicant options like the psk,
+proto, key_mgmt etc. using wifi-radar. Your wpa_supplicant
+configuration file should be set and tested already. If you have
+different networks set in wpa_supplicant.conf, then you can switch using
+wifi-radar.
+.SH FILES
+.TP 10
+.B /etc/wifi-radar/wifi-radar.conf
+See
+.BR wifi-radar.conf (5)
+for more information.
+.SH BUGS
+.PP
+Probably lots!
+.PP
+Because of a continuous scan, wifi-radar is very power consuming. 
+.PP
+The SVN repository is available at http://svn.bitbuilder.com
+.PP
+If you have questions, post them to the Linux Forum at the X1000 Forums site
+(http://www.x1000forums.com/index.php?showforum=8).
+.SH AUTHOR
+.PP
+This script was written by Ahmad Baitaimal, with contributions from:
+.IP \(bu 4
+Brian Elliott Finley <brian@thefinleys.com>
+.IP \(bu 4
+Brouard Nicolas <nicolas.brouard@libertysurf.fr>
+.IP \(bu 4
+Douglas Breault <genkreton@comcast.net>
+.IP \(bu 4
+Joey Hurst <jhurst@josephhurst.net>
+.IP \(bu 4
+Jon Collette <jonc@etelos.com>
+.IP \(bu 4
+Kevin Otte <kotte@redhat.com>
+.IP \(bu 4
+Richard Monk <rmonk@redhat.com>
+.SH SEE ALSO
+.PP
+.BR wifi-radar.conf (5)
+.PP
+.BR wpa_supplicant

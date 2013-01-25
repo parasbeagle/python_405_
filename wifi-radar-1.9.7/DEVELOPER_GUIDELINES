@@ -1,0 +1,89 @@
+#
+#   "wifi-radar"
+#
+#   $Id: DEVELOPER_GUIDELINES 19 2006-01-27 05:01:52Z finley $
+#
+
+o   Try to mimick the style of the code that you are working in.
+
+o   Include a usage statement with every function/subroutine, no matter how
+    simple and self-explanatory that function is.  Example:
+
+        #
+        # Description:
+        #   Chooses most appropriate from the available partition tools.
+        #
+        # Usage:
+        #   my $partition_tool = which_partition_tool();
+        #
+        sub which_partition_tool {
+            [... code here ...]
+        }
+
+o   When you close a bug or feature request, add an appropriate line to the 
+    CHANGE.LOG that includes the bug or feature number and who you are.
+
+o   Always give people credit in the AUTHORS file.
+
+o   Have fun!
+
+
+--------------------------------------------------------------------------------
+SVN
+--------------------------------------------------------------------------------
+o   The current development branch is always tagged "trunk".  It is
+    intended for feature additions and funky stuff.  Unless you're just
+    fixing a bug, or updating the stable documentation, this is what you
+    want.
+
+o   The stable branch is only to be used for fixing bugs.
+
+o   Only Brian Finley will modify SVN tags for branching or for numeric-only
+    releases, such as 1.2.3.  Anyone with SVN access is welcome to make their 
+    own tags or branches, as is appropriate, but must include their initials
+    or similar in the tag or branch name.
+
+o   Reference Material
+
+    o   http://gentoo-wiki.com/HOWTO_Subversion
+    o   http://svnbook.red-bean.com/
+
+o   Checkout Steps for Developers
+    (You should be able to just copy and paste commands 2-5)
+
+    MY_USERNAME=finley
+
+    o  Development trunk:
+
+	svn checkout svn+ssh://$MY_USERNAME@svn.systemimager.org/var/lib/svn/wifi-radar/trunk wifi-radar.trunk/
+
+
+    o  A particular revision of the development trunk:
+
+	REVISION=3256
+	svn checkout -r $REVISION svn+ssh://$MY_USERNAME@svn.systemimager.org/var/lib/svn/wifi-radar/trunk wifi-radar.$REVISION/
+
+
+    o  A particular branch:
+
+	BRANCH=3.4.x
+	svn checkout svn+ssh://$MY_USERNAME@svn.systemimager.org/var/lib/svn/wifi-radar/branches/$BRANCH wifi-radar.$BRANCH/
+
+
+
+--------------------------------------------------------------------------------
+Versioning
+--------------------------------------------------------------------------------
+o   wifi-radar uses kernel style versioning (X.Y.Z):
+
+    X = major architectural change
+    Y = feature release
+        o   An odd number indicates a development release (leading up
+            to an even numbered stable release).
+        o   An even number indicates a stable release.
+    Z = bug fix release
+        o   (no new features)
+
+o   Development releases may be made available unofficially.
+
+

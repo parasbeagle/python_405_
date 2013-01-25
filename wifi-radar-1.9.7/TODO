@@ -1,0 +1,32 @@
+#
+# $Id: TODO 70 2006-09-15 14:11:03Z finley $
+#  vi:set tw=72:
+#
+
+- Center 'connected to X' text below network listing
+- Integration of WPA TKIP (wpa_supplicant)? (PARTIALLY done in
+  0.3.8-6mdk) 
+- Set LC_MESSAGES=C in environment when wifi-radar is started, rather
+  than prefixing commands with this variable.
+- auto-detect wireless interfaces if no interface specified, or if
+  specified interface is not wifi capable, and offer to set it: iwconfig
+  2>&1 | grep ESSID | awk '{print $1}'
+- have drop-down box for selecting from available wifi devices, and
+  remember last one selected (write to conf)
+- "Cancel" button on the "Acquiring..." dialog box.
+- Rename the "Edit" button to "Configure".
+- Grey out buttons that are not relevant.  Ie.: When an unconfigured
+  access point is selected, grey out all buttons except for: "New" and
+  "Configure".
+- Add a check box to automatically close the GUI on successful IP
+  acquisition.  Wait X seconds before closing.
+- Make wifi-radar run as a daemon that always checks the connection
+  status then Auto connects when possible.
+- Add more ifconfig and iwconfig status info.
+- Translate.
+- Add a preferences dialog so there won't be a need to edit
+  wifi-radar.conf by hand.
+- Floating help thingy to say drag and drop profiles to set ordered
+  preference.
+- Attempt to connect to unconfigured APs, if no configured APs exist, in
+  daemon mode.

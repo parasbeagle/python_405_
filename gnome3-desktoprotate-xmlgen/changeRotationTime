@@ -1,0 +1,4 @@
+#!/bin/bash
+# change rotation time of a gnome3 background xml
+# usage: $0 [filename.xml] [seconds]
+sed  -i "s/ion>.*<\/dur/ion>$2<\/dur/" $1

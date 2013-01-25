@@ -1,0 +1,71 @@
+#
+# $Id: CHANGELOG 59 2006-03-28 06:42:14Z finley $
+#  vi:set filetype=conf tw=78 et:
+#
+
+2005.XX.XX Brian Elliott Finley <brian@thefinleys.com>
+    * Release 1.9.7
+        - Several suggestions from Eugenia Loli-Queru <eugenia at osnews
+          dot com>:
+            - Only show connect or disconnect button, depending on what's
+              appropriate
+            - Eliminate 'My preferred WiFi Networks' title
+            - Put disconnect/connect button at bottom
+            - Remove horizontal bar in button area
+        - Fix bug reported by Pieter Lenaerts <e-type at sourcemage dot org>.
+          Static dns settings resulted in 'sh: ' at the start of each line in
+          resolv.conf.  Switched to using python write command, instead of 
+          the shell's echo command.
+
+2005.03.27 Brian Elliott Finley <brian@thefinleys.com>
+    * Release 1.9.6
+        - Set standard dhcpcd options to the minimum
+        - Add comments pointing users at their dhcpcd config file for adding
+          options
+        - Prompted by an email sent in by "Harry C. Gonzalez Rivera"
+          <hcgonzalezpr@gmail.com>
+
+2005.03.19 Brian Elliott Finley <brian@thefinleys.com>
+    * Release 1.9.5
+        - Fix postscript support
+        - Incorporate ubuntu/debian patches by by Ante Karamatic.
+        - Add use any dhcp client support.  Currently this means dhcpcd,
+          dhclient v2, dhclient v3, and pump, but others can easily be 
+          added.
+        - Fix a conflict between the setting of LC_MESSAGES=C for some binaries
+          and the way os.spawnlp was calling them.
+        - On "Disconnect", unset IP on interface with 'ifconfig IFACE 0.0.0.0'
+
+2005-04-12 Nicolas Brouard <nicolas.brouard@mandrake.org>
+	* Release 1.9.3-3mdk
+		- Partial implementation of wpa_supplicant by intergrating use_wpa = yes and
+		wpa_driver= = ipw or whatever available.
+		wifi-radar launnhes wpa_supplicant as a daemon after reading 
+		/etc/wpa_supplicant/wpa_supplicant.conf . But this latter file can't be updated
+		or even set by wifi-radar yet. wpa_supplicant must be patched with the -p option
+		in order to set the /var/run/wpa_supplicant.pid file.
+2005-04-03 Nicolas Brouard <nicolas.brouard@mandrake.org>
+	* Release 1.9.3-2mdk:
+		- Kill dhclient when disconnecting.
+	
+2005-03-21 Ahmad baitalmal <ahmad@baitalmal.com>
+
+	* Release 1.9.1: 
+		- Fixed scanning regex patterns for iwlist inconsistencies.
+
+2005-03-20 Ahmad baitalmal <ahmad@baitalmal.com>
+	
+	* Release 1.9: 
+		- Added threaded scanning.
+		- Signal bars.
+		- New embedded icons.
+		- Changed name from wifi_radar to wifi-radar per convention.
+
+2004-08-04 Ahmad baitalmal <ahmad@baitalmal.com>
+
+	* Release 1.1: 
+		- Adds a disconnect button.
+
+2004-07-04 Ahmad baitalmal <ahmad@baitalmal.com>
+
+	* Initial release
